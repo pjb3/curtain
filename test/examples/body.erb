@@ -1,0 +1,6 @@
+<h1><%= msg %></h1>
+<% if defined? main %>
+  This won't be reached,
+  because the local doesn't carry through to subsequent render calls,
+  but the variables, like methods on the view, do.
+<% end %>
