@@ -3,11 +3,15 @@ module Curtain
 
   module Caching
     module ClassMethods
-      def cache
-        if defined? @cache
-          @cache
-        elsif superclass.respond_to?(:cache)
-          superclass.cache
+      def cache(*args)
+        if args.empty?
+          if defined? @cache
+            @cache
+          elsif superclass.respond_to?(:cache)
+            superclass.cache
+          end
+        else
+          self.cache = args.first
         end
       end
 

@@ -4,13 +4,17 @@ module Curtain
 
   module Templating
     module ClassMethods
-      def template_directories
-        if defined? @template_directories
-          @template_directories
-        elsif superclass.respond_to?(:template_directories)
-          superclass.template_directories
+      def template_directories(*args)
+        if args.empty?
+          if defined? @template_directories
+            @template_directories
+          elsif superclass.respond_to?(:template_directories)
+            superclass.template_directories
+          else
+            @template_directories ||= [Dir.pwd]
+          end
         else
-          @template_directories ||= [Dir.pwd]
+          self.template_directories = args
         end
       end
 
@@ -37,11 +41,15 @@ module Curtain
       end
 
       def template(*args)
-        if args.length == 1
-          @template = args.first
-        else
+        if args.empty?
           @template ||= name.underscore.sub(/_view$/,'')
+        else
+          @template = args.first
         end
+      end
+
+      def template=(template)
+        @template = template
       end
     end
 

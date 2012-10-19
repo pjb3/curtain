@@ -20,10 +20,10 @@ Or install it yourself as:
 
 The use Curtain, you define a view and then have that view render templates:
 
-    # hello.erb
+### hello.erb
     <h1><%= msg %></h1>
 
-    # my_view.rb
+### my_view.rb
     class MyView < Struct.new(:msg)
       include Curtain
     end
@@ -33,25 +33,27 @@ The use Curtain, you define a view and then have that view render templates:
 
 The template is rendered in the scope of the view object, so any methods defined in the view are available to the template.  You don't have to create a subclass if you don't need to:
 
-    Curtain::View.new.render("hello", msg: "Hello, World!")
+    Curtain::View.new.render("hello", :msg => "Hello, World!")
 
 There is an equivalent shortcut available:
 
-    Curtain.render("hello", msg: "Hello, World!")
+    Curtain.render("hello", :msg => "Hello, World!")
 
-Curtain includes many useful methods.  Here's a more realistic example that shows some of the built-in methods:
+Curtain includes many useful methods.  Here's a more realistic example that shows some of the built-in methods.  If you have templates like this:
 
-    # friends.erb
+### friends.erb
     <% cache "friends-#{current_user.id}", ttl: 5.minutes do %>
       <% friends.each do |friend| %>
-        <%= render "profile", profile: friend %>
+        <%= render "profile", :profile => friend %>
       <% end %>
     <% end %>
 
-    # profile.erb
+### profile.erb
     <ul>
-      <li><%= link_to friend.name, path_for(:profile, id: friend.id) %></li>
+      <li><%= link_to profile.name, path(:profile, :id => profile.id) %></li>
     </ul>
+
+You can use them in this way:
 
     class ApplicationView < Curtain::View
       attr_accessor :current_user
@@ -61,7 +63,7 @@ Curtain includes many useful methods.  Here's a more realistic example that show
       delegate :friends, :to => :current_user
     end
 
-    view = FriendsView.new(current_user: User.first)
+    view = FriendsView.new(:current_user => User.first)
 
     # The default template name is based on the name of the class of the view
     view.render

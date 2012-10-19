@@ -2,50 +2,24 @@ require 'test/unit'
 require 'slim'
 require 'curtain'
 
-class TestView < Curtain::View
-  self.template_directories = File.join(File.dirname(__FILE__), "examples")
-
-  attr_accessor :name
-
-  def shout(s)
-    s.upcase
-  end
-end
-
-class SubdirView < Curtain::View
-  template :index
-end
-
-SubdirView.template_directories = [File.join(File.dirname(__FILE__), "examples", "subdir")] + Curtain::View.template_directories
-
-class TestCache
-
-  def initialize
-    flush
-  end
-
-  def get(k, opts={})
-    @store[k]
-  end
-
-  def set(k, v, ttl=nil, opts={})
-    @store[k] = v
-  end
-
-  def flush
-    @store = {}
-  end
-
-end
-
-class CacheView < TestView; end
-CacheView.cache = TestCache.new
-
 class CurtainTest < Test::Unit::TestCase
 
-  def setup
-    CacheView.cache.flush
+  # Using the top-level to test default template name behavior
+  class ::TestView < Curtain::View
+    self.template_directories = File.join(File.dirname(__FILE__), "examples")
+
+    attr_accessor :name
+
+    def shout(s)
+      s.upcase
+    end
   end
+
+  class SubdirView < Curtain::View
+    template :index
+  end
+
+  SubdirView.template_directories = [File.join(File.dirname(__FILE__), "examples", "subdir")] + Curtain::View.template_directories
 
   def test_render_default
     view = TestView.new
@@ -78,21 +52,4 @@ class CurtainTest < Test::Unit::TestCase
     assert_equal "<html><body><h1>Hello, World!</h1>\n</body></html>\n", view.render("layout", :main => "body")
   end
 
-  def test_cache_erb
-    view = CacheView.new
-    assert_equal "  <h1>foo</h1>\n", view.render
-    assert_equal "  <h1>foo</h1>\n", view.class.cache.get("foo")
-  end
-
-  def test_cache_haml
-    view = CacheView.new
-    assert_equal "<h1>foo</h1>\n\n", view.render("cache.haml")
-    assert_equal "<h1>foo</h1>\n", view.class.cache.get("foo")
-  end
-
-  def test_cache_slim
-    view = CacheView.new
-    assert_equal "<h1>foo</h1>", view.render("cache.slim")
-    assert_equal "<h1>foo</h1>", view.class.cache.get("foo")
-  end
 end
