@@ -18,12 +18,12 @@ Or install it yourself as:
 
 ## Usage
 
-The use Curtain, you define a view and then have that view render templates:
+To use Curtain, you define a view and then have that view render templates:
 
-### hello.erb
+    # hello.erb
     <h1><%= msg %></h1>
 
-### my_view.rb
+    # my_view.rb
     class MyView < Struct.new(:msg)
       include Curtain
     end
@@ -41,14 +41,14 @@ There is an equivalent shortcut available:
 
 Curtain includes many useful methods.  Here's a more realistic example that shows some of the built-in methods.  If you have templates like this:
 
-### friends.erb
+    # friends.erb
     <% cache "friends-#{current_user.id}", ttl: 5.minutes do %>
       <% friends.each do |friend| %>
         <%= render "profile", :profile => friend %>
       <% end %>
     <% end %>
 
-### profile.erb
+    # profile.erb
     <ul>
       <li><%= link_to profile.name, path(:profile, :id => profile.id) %></li>
     </ul>
@@ -67,6 +67,37 @@ You can use them in this way:
 
     # The default template name is based on the name of the class of the view
     view.render
+
+### Variables
+
+If you don't want to define a subclass of `Curtain::View` and add attributes to it, you can also use variables.  `Curtain::View` supports the hash-like Ruby method `[]` and `[]=` to define variables that will act as locals in when the template is rendered:
+
+    # hello.erb
+    <h1><%= msg %></h1>
+
+    view = Curtain::View.new
+    view[:msg] = "Hello"
+    view.render # => "<h1>Hello</h1>"
+    
+Note that unlike locals, variables exist throughout nested scope of render calls:
+
+    # main.erb
+    foo: <%= foo %>
+    bar: <%= bar %>
+    <%= render "partial" %>
+    
+    # partial.erb
+    foo: <%= foo %>
+    bar: <%= bar %>
+    
+    class MainView < Curtain::View
+    end
+    
+    view = MainView.new
+    view[:foo] = "foo"
+    view.render :bar => "bar"
+
+This example would result in an error.  As the main template is first rendered, foo is defined as "foo" because it is a variable, the bar is "bar" because it is passed in as a local.  Then the partial template is rendered, and foo is still defined as "foo" because it is a variable, but since bar was a local passed to the rendering of main, it doesn't carry through to the rendering of partial.
 
 ## Contributing
 

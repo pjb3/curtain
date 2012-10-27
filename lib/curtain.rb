@@ -5,6 +5,7 @@ require 'curtain/block_helpers'
 require 'curtain/url_helpers'
 require 'curtain/caching'
 require 'curtain/variable_support'
+require 'curtain/html_helpers'
 
 module Curtain
 
@@ -16,6 +17,7 @@ module Curtain
       include Curtain::UrlHelpers
       include Curtain::Caching
       include Curtain::VariableSupport
+      include Curtain::HTMLHelpers
     end
   end
 
