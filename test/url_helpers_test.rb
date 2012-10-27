@@ -2,7 +2,7 @@ require 'test/unit'
 require 'slim'
 require 'curtain'
 
-class CurtainTest < Test::Unit::TestCase
+class UrlHelpersTest < Test::Unit::TestCase
 
   class TestView < Curtain::View
     named_routes :home => "/home",
