@@ -30,7 +30,7 @@ module Curtain
           value = capture(&block)
           self.class.cache.set(key, value, ttl)
         end
-        concat(value)
+        value
       else
         raise CacheNotSet.new("Cache not set, set it with Curtain.cache = Cache.new")
       end

@@ -19,12 +19,11 @@ module Curtain
         result << ">"
       end
 
-      body = if block
-        capture(&block)
-      else
-        attributes_or_body.to_s
+      if block
+        result << capture(&block)
+      elsif !attributes_or_body.is_a?(Hash)
+        result << attributes_or_body.to_s
       end
-      result << body
 
       result << "</#{name}>"
 

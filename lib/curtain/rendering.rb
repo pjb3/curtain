@@ -1,4 +1,5 @@
 require 'tilt'
+require 'curtain/erubis_template'
 
 module Curtain
   module Rendering
@@ -34,9 +35,16 @@ module Curtain
 
       locals = args.last.is_a?(Hash) ? args.last : {}
 
+      # TODO: Cache Template objects
       template_file = self.class.find_template(name)
-      template = Tilt.new(template_file, :outvar => '@output_buffer', :buffer => '@output_buffer')
+
+      orig_buffer = @output_buffer
+      @output_buffer = Curtain::OutputBuffer.new
+      template = Tilt.new(template_file, :buffer => '@output_buffer', :use_html_safe => true, :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer)
       template.render(self, variables.merge(locals))
+      @output_buffer
+    ensure
+      @output_buffer = orig_buffer
     end
   end
 end

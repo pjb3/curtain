@@ -38,17 +38,14 @@ class CurtainTest < Test::Unit::TestCase
     view = CacheView.new
     assert_equal "<h1>foo</h1>", view.render.strip
     assert_equal "<h1>foo</h1>", view.class.cache.get("foo").strip
-  end
-
-  def test_cache_haml
-    view = CacheView.new
-    assert_equal "<h1>foo</h1>", view.render("cache.haml").strip
-    assert_equal "<h1>foo</h1>", view.class.cache.get("foo").strip
+    assert_equal "<h1>foo</h1>", view.render.strip
   end
 
   def test_cache_slim
     view = CacheView.new
-    assert_equal "<h1>foo</h1>", view.render("cache.slim").strip
+    result = view.render("cache.slim").strip
     assert_equal "<h1>foo</h1>", view.class.cache.get("foo").strip
+    assert_equal "<h1>foo</h1>", result
+    assert_equal "<h1>foo</h1>", view.render("cache.slim").strip
   end
 end
