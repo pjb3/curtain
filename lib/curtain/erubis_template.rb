@@ -1,5 +1,4 @@
 require 'tilt'
-require 'curtain/erubis'
 
 module Curtain
   class ErubisTemplate < Tilt::Template

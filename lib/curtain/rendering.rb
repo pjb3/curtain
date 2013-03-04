@@ -1,5 +1,4 @@
 require 'tilt'
-require 'curtain/erubis_template'
 
 module Curtain
   module Rendering

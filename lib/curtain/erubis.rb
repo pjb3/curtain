@@ -1,5 +1,7 @@
 require 'erubis'
+require 'curtain'
 require 'curtain/output_buffer'
+require 'curtain/erubis_template'
 
 module Curtain
   class Erubis < ::Erubis::Eruby

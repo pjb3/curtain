@@ -1,6 +1,4 @@
-require 'test/unit'
-require 'slim'
-require 'curtain'
+require 'test_helper'
 
 class UrlHelpersTest < Test::Unit::TestCase
 

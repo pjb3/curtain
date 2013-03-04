@@ -1,6 +1,4 @@
-require 'test/unit'
-require 'slim'
-require 'curtain'
+require 'test_helper'
 
 class CurtainTest < Test::Unit::TestCase
 

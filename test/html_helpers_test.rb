@@ -1,6 +1,4 @@
-require 'test/unit'
-require 'slim'
-require 'curtain'
+require 'test_helper'
 
 class HTMLHelpersTest < Test::Unit::TestCase
   include Curtain::BlockHelpers
