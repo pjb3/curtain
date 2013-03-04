@@ -4,6 +4,11 @@ module Curtain
 
   module Templating
     module ClassMethods
+
+      def default_template_directories
+        [Dir.pwd]
+      end
+
       def template_directories(*args)
         if args.empty?
           if defined? @template_directories
@@ -11,7 +16,7 @@ module Curtain
           elsif superclass.respond_to?(:template_directories)
             superclass.template_directories
           else
-            @template_directories ||= [Dir.pwd]
+            @template_directories ||= default_template_directories
           end
         else
           self.template_directories = args
