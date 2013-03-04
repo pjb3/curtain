@@ -6,6 +6,7 @@ require 'curtain/url_helpers'
 require 'curtain/caching'
 require 'curtain/variable_support'
 require 'curtain/html_helpers'
+require 'curtain/version'
 
 module Curtain
 
