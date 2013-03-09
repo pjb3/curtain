@@ -5,14 +5,14 @@ Gem::Specification.new do |gem|
   gem.email         = ["mail@paulbarry.com"]
   gem.description   = %q{A template rendering framework}
   gem.summary       = %q{A template rendering framework}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/pjb3/curtain"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "curtain"
   gem.require_paths = ["lib"]
-  gem.version       = "0.1.2"
+  gem.version       = "0.1.3"
 
   gem.add_runtime_dependency "activesupport"
   gem.add_runtime_dependency "tilt"
