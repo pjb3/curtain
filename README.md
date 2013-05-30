@@ -29,9 +29,9 @@ To use Curtain, you define a view and then have that view render templates:
 ``` ruby
 class MyView
   include Curtain
-  
+
   attr_accessor :msg
-  
+
   def initialize(msg)
     @msg = msg
   end
@@ -55,41 +55,6 @@ There is an equivalent shortcut available:
 Curtain.render("hello", :msg => "Hello, World!")
 ```
 
-Curtain includes many useful methods.  Here's a more realistic example that shows some of the built-in methods.  If you have templates like this:
-
-### friends.erb
-``` erb
-<% cache "friends-#{current_user.id}", ttl: 5.minutes do %>
-  <% friends.each do |friend| %>
-    <%= render "profile", :profile => friend %>
-  <% end %>
-<% end %>
-```
-
-### profile.erb
-``` erb
-<ul>
-  <li><%= link_to profile.name, path(:profile, :id => profile.id) %></li>
-</ul>
-```
-
-You can use them in this way:
-
-``` ruby
-class ApplicationView < Curtain::View
-  attr_accessor :current_user
-end
-
-class FriendsView < Curtain::View
-  delegate :friends, :to => :current_user
-end
-
-view = FriendsView.new(:current_user => User.first)
-
-# The default template name is based on the name of the class of the view
-view.render
-```
-
 ### Variables
 
 If you don't want to define a subclass of `Curtain::View` and add attributes to it, you can also use variables.  `Curtain::View` supports the hash-like Ruby method `[]` and `[]=` to define variables that will act as locals in when the template is rendered:
@@ -104,7 +69,7 @@ view = Curtain::View.new
 view[:msg] = "Hello"
 view.render(:hello) # => "<h1>Hello</h1>"
 ```
-    
+
 Note that unlike locals, variables exist throughout nested scope of render calls:
 
 ### main.erb
@@ -113,14 +78,14 @@ foo: <%= foo %>
 bar: <%= bar %>
 <%= render "partial" %>
 ```
-    
+
 ### partial.erb
 ``` erb
 foo: <%= foo %>
 bar: <%= bar %>
 ```
 
-``` ruby    
+``` ruby
 class MainView < Curtain::View
 end
 

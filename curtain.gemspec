@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "curtain"
   gem.require_paths = ["lib"]
-  gem.version       = "0.1.3"
+  gem.version       = "0.2.0"
 
   gem.add_runtime_dependency "activesupport"
   gem.add_runtime_dependency "tilt"
@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "erubis"
   gem.add_development_dependency "haml"
   gem.add_development_dependency "slim"
+  gem.add_development_dependency "mustache"
 end

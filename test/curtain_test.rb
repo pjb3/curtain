@@ -1,3 +1,4 @@
+puts $:
 require 'test_helper'
 
 class CurtainTest < Test::Unit::TestCase
@@ -10,6 +11,43 @@ class CurtainTest < Test::Unit::TestCase
 
     def shout(s)
       s.upcase
+    end
+  end
+
+  class Account
+    attr_accessor :email, :password, :first_name, :last_name, :gender, :date_of_birth
+
+    def initialize(attrs={})
+      if attrs
+        attrs.each do |attr, value|
+          send("#{attr}=", value)
+        end
+      end
+    end
+  end
+
+  class ::RegistrationView < TestView
+
+    attr_accessor :account, :errors
+
+    delegate :email, :first_name, :last_name, :gender, :date_of_birth, :to => :account
+
+    def date_of_birth_day_options
+      [{}] + (1..31).map do |day|
+        { text: day, value: day, selected: day == date_of_birth.try(:day) }
+      end
+    end
+
+    def date_of_birth_month_options
+      Date::ABBR_MONTHNAMES.each_with_index.map do |month, i|
+        { text: month, value: i > 0 ? 1 : nil, selected: i == date_of_birth.try(:month) ? 'selected' : nil }
+      end
+    end
+
+    def date_of_birth_year_options
+      [{}] + 13.years.ago.year.downto(113.years.ago.year).map do |year|
+        { text: year, value: year, selected: year == date_of_birth.try(:year) ? 'selected' : nil }
+      end
     end
   end
 
@@ -48,6 +86,34 @@ class CurtainTest < Test::Unit::TestCase
     view = TestView.new
     view[:msg] = "Hello, World!"
     assert_equal "<html><body><h1>Hello, World!</h1>\n</body></html>\n", view.render("layout", :main => "body")
+  end
+
+  def test_mustache_form
+    expected = remove_whitespace(%{<h2>Register</h2>
+<form action="/register">
+  <label class="block">
+    Email:
+    <input type="type" name="email" value="mail@paulbarry.com" />
+  </label>
+  <label class="block">
+    Password:
+    <input type="password" name="password" />
+  </label>
+  <label class="block">
+    First Name:
+    <input type="text" name="first_name" value="" />
+  </label>
+  <button type="submit" class="btn btn-primary">Log In</button>
+</form>})
+
+    view = RegistrationView.new(account: Account.new(email: 'mail@paulbarry.com', date_of_birth: Date.parse('1978-07-06')))
+    puts view.render
+    assert_equal expected, remove_whitespace(view.render)
+  end
+
+  private
+  def remove_whitespace(s)
+    s.to_s.split("\n").map(&:strip).reject(&:blank?).join("\n")
   end
 
 end
