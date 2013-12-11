@@ -18,7 +18,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "tilt"
 
   gem.add_development_dependency "erubis"
-  gem.add_development_dependency "haml"
   gem.add_development_dependency "slim"
-  gem.add_development_dependency "mustache"
 end

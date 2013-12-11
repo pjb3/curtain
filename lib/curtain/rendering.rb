@@ -2,25 +2,6 @@ require 'tilt'
 
 module Curtain
 
-  class MustacheRenderer < ::Mustache
-    def initialize(view, template_file)
-      @view = view
-      @template_file = template_file
-    end
-
-    def respond_to?(method_name)
-      super || @view.respond_to?(method_name)
-    end
-
-    def method_missing(name, *args, &block)
-      if @view.respond_to?(name)
-        @view.send(name, *args, &block)
-      else
-        super
-      end
-    end
-  end
-
   module Rendering
     # Renders the template
     #
@@ -28,7 +9,7 @@ module Curtain
     #   view.render
     #
     # @example Render the foo template
-    #   view.render "foo.erb"
+    #   view.render "foo.slim"
     #
     # @example You can use symbols and omit the extension
     #   view.render :foo
@@ -58,16 +39,13 @@ module Curtain
       template_file = self.class.find_template(name)
       ext = template_file.split('.').last
 
-      # Apparently Tilt doesn't support mustache?
-      # TODO: There has to be an implementation out there,
-      # if not, write one
-      if ext == 'mustache'
-        mustache = MustacheRenderer.new(self, template_file)
-        mustache.render
-      else
-        template = Tilt.new(template_file)
-        template.render(self, variables.merge(locals))
-      end
+      orig_buffer = @output_buffer
+      @output_buffer = Curtain::OutputBuffer.new
+      template = Tilt.new(template_file, :buffer => '@output_buffer', :use_html_safe => true, :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer )
+      template.render(self, variables.merge(locals))
+      @output_buffer
+    ensure
+      @output_buffer = orig_buffer
     end
   end
 end
