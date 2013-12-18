@@ -13,7 +13,8 @@ module Curtain
       # Have a property for a default form builder
       # Accept builder and object attrs
       # Allow for custom builder classes
-      self.current_form = FormBuilder.new
+      attrs = attrs.dup
+      self.current_form = FormBuilder.new(attrs.delete(:for))
       content = content_tag(:form, attrs, &body)
       self.current_form = nil
       content

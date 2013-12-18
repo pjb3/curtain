@@ -75,11 +75,11 @@ module Curtain
       :hr,
       :img
     ].each do |tag|
-      class_eval %{
+      class_eval <<-METHOD, __FILE__, __LINE__ + 1
         def #{tag}(attrs={})
           void_tag(#{tag.inspect}, attrs)
         end
-      }
+      METHOD
     end
 
     # @!method a(content=nil, attrs={}, &body)
@@ -138,20 +138,24 @@ module Curtain
       :h5,
       :h6,
       :i,
+      :li,
+      :option,
       :p,
+      :section,
       :table,
       :tbody,
       :td,
       :tfoot,
       :th,
       :thead,
-      :tr
+      :tr,
+      :ul
     ].each do |tag|
-      class_eval %{
+      class_eval <<-METHOD, __FILE__, __LINE__ + 1
         def #{tag}(content=nil, attrs={}, &body)
           content_tag(#{tag.inspect}, content, attrs, &body)
         end
-      }
+      METHOD
     end
 
     private
@@ -160,9 +164,13 @@ module Curtain
 
       if attrs
         attrs.each do |name, value|
-          tag << %{ #{name}="}.html_safe
-          tag << value
-          tag << '"'.html_safe
+          if value == true
+            tag << %{ #{name}}.html_safe
+          elsif value != false
+            tag << %{ #{name}="}.html_safe
+            tag << value
+            tag << '"'.html_safe
+          end
         end
       end
 

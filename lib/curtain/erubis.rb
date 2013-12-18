@@ -1,3 +1,6 @@
+require 'erubis'
+require 'curtain/erubis_template'
+
 module Curtain
   class Erubis < ::Erubis::Eruby
     def add_text(src, text)

@@ -1,3 +1,78 @@
-<%= form id: 'test' do %>
-  <%= text name: 'name' %>
+<h1>Account</h1>
+
+<%= form for: @account, role: 'form' do %>
+  <div class="form-group">
+    <%= label :email, class: 'control-label' %>
+    <%= email :email, class: 'form-control' %>
+  </div>
+
+  <%# I don't recommend using the div method if it's just static HTML %>
+  <%# but I want to test to make sure that it does work %>
+  <%= div class: 'form-group' do %>
+    <%= label :password, class: 'control-label' %>
+    <%= password :password, class: 'form-control' %>
+  <% end %>
+
+  <div class="form-group">
+    <%= label :first_name, class: 'control-label' %>
+    <%= text :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :last_name, class: 'control-label' %>
+    <%= text :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :website, class: 'control-label' %>
+    <%= url :website, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :phone, class: 'control-label' %>
+    <%= tel :phone, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Gender</label>
+    <div>
+      <label class="radio-inline">
+        <%= radio :gender, value: 'm' %>
+        Male
+      </label>
+
+      <label class="radio-inline">
+        <%= radio :gender, value: 'f' %>
+        Female
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label :favorite_color, class: 'control-label' %>
+    <%= color :favorite_color, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :language %>
+    <%= select :language, options: [["English", "en"], ["Spanish", "es"]], class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :date_of_birth %>
+    <%= date :date_of_birth, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label :bio %>
+    <%= textarea :bio, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <%= checkbox :notifications %>
+      Send Me Monthly Updates
+    </label>
+  </div>
+
 <% end %>

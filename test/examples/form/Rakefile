@@ -1,0 +1,32 @@
+$:.unshift(File.join(File.dirname(__FILE__), "../../../lib"))
+require 'curtain'
+require 'curtain/erubis'
+require File.join(File.dirname(__FILE__), 'account')
+require File.join(File.dirname(__FILE__), 'account_view')
+require 'yaml'
+
+require 'rake/clean'
+CLOBBER.include('**/*.html')
+
+def write_file(file, contents)
+  puts file
+  open(file, 'w') {|f| f << contents }
+end
+
+desc "Build account page using ERB and no data"
+task :erb do
+  AccountView.template_directories = File.join(File.dirname(__FILE__), 'erb')
+  view = AccountView.new
+  write_file 'erb/account_blank.html', view.render("bootstrap", main: "account")
+end
+
+desc "Build the account page using ERB with data"
+task :erb_with_data do
+  AccountView.template_directories = File.join(File.dirname(__FILE__), 'erb')
+  view = AccountView.new
+  view.account = Account.new(YAML.load_file(File.expand_path('account.yml')))
+  write_file 'erb/account.html', view.render("bootstrap", main: "account")
+end
+
+desc "Build all examples"
+task :default => [:erb, :erb_with_data]

@@ -1,0 +1,10 @@
+email: mail@paulbarry.com
+password: secret
+first_name: Paul
+last_name: Barry
+website: http://paulbarry.com
+phone: 555-123-4567
+gender: m
+date_of_birth: '1970-01-01'
+bio: This is my bio
+notifications: true
