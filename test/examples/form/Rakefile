@@ -34,15 +34,21 @@ end
 
 desc "Watch this directory for changes and run the default task when there are some"
 task :watch do
-  require 'rb-fsevent'
-  fsevent = FSEvent.new
-  dir = Dir.pwd
-  fsevent.watch dir do |directories|
-    puts "Detected change in #{directories.inspect}"
-    `rake`
+  begin
+    require 'listen'
+  rescue LoadError
+    puts "You must install the listen gem in order to use this task"
+    exit 1
   end
-  puts "Watching for changes in #{dir}..."
-  fsevent.run
+
+  listener = Listen.to(File.join($root, 'lib'), File.join($root, 'test')) do |directories|
+    puts "Detected change in #{directories.inspect}"
+    system 'rake'
+  end
+  puts "Watching for changes..."
+  listener.start
+  trap("SIGINT") { exit! }
+  sleep
 end
 
 desc "Build all examples"
