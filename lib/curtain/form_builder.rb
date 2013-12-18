@@ -154,14 +154,14 @@ module Curtain
     #@param attrs [Hash] The attributes for the tag
     #@return [String] HTML input tag with type="checkbox"
     def checkbox(name, attrs={})
-      input(:checkbox, { type: 'checkbox', value: 'true', checked: !!object.try(:name) }.merge(attrs))
+      input(:checkbox, { type: 'checkbox', value: 'true', checked: !!object.try(name) }.merge(attrs))
     end
 
     #@param name [String] The value for the name attribute
     #@param attrs [Hash] The attributes for the tag
     #@return [String] HTML input tag with type="radio"
     def radio(name, attrs={})
-      input(:radio, { type: 'radio', checked: (attrs.has_key?(:value) && attrs[:value].to_s == object.try(:name).to_s) }.merge(attrs))
+      input(:radio, { type: 'radio', checked: (attrs.has_key?(:value) && attrs[:value].to_s == object.try(name).to_s) }.merge(attrs))
     end
 
     def select(name, attrs={}, &body)

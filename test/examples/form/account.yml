@@ -5,6 +5,7 @@ last_name: Barry
 website: http://paulbarry.com
 phone: 555-123-4567
 gender: m
+favorite_color: "#00cc00"
 date_of_birth: '1970-01-01'
 bio: This is my bio
 notifications: true
