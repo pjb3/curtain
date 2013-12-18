@@ -1,16 +1,20 @@
-$:.unshift(File.join(File.dirname(__FILE__), "../../../lib"))
+$root = File.expand_path("../../../..", __FILE__)
+puts $root
+$:.unshift(File.expand_path("lib", $root))
 require 'curtain'
 require 'curtain/erubis'
-require File.join(File.dirname(__FILE__), 'account')
-require File.join(File.dirname(__FILE__), 'account_view')
+require_relative 'account'
+require_relative 'account_view'
 require 'yaml'
 
-require 'rake/clean'
-CLOBBER.include('**/*.html')
-
 def write_file(file, contents)
-  puts file
-  open(file, 'w') {|f| f << contents }
+  out_file = File.join($root, 'tmp', file)
+  out_dir = File.dirname(out_file)
+  unless Dir.exists?(out_dir)
+    mkdir_p out_dir
+  end
+  puts out_file
+  open(out_file, 'w') {|f| f << contents }
 end
 
 desc "Build account page using ERB and no data"
@@ -26,6 +30,19 @@ task :erb_with_data do
   view = AccountView.new
   view.account = Account.new(YAML.load_file(File.expand_path('account.yml')))
   write_file 'erb/account.html', view.render("bootstrap", main: "account")
+end
+
+desc "Watch this directory for changes and run the default task when there are some"
+task :watch do
+  require 'rb-fsevent'
+  fsevent = FSEvent.new
+  dir = Dir.pwd
+  fsevent.watch dir do |directories|
+    puts "Detected change in #{directories.inspect}"
+    `rake`
+  end
+  puts "Watching for changes in #{dir}..."
+  fsevent.run
 end
 
 desc "Build all examples"
