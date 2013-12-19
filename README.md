@@ -99,7 +99,7 @@ Curtain.render("main") # => "<h2>Hello, I'm a Partial!</h2>"
 
 ## Variables
 
-If you don't want to define a subclass of `Curtain::View` and add attributes to it, you can also use variables.  `Curtain::View` supports the hash-like Ruby method `[]` and `[]=` to define variables that will act as locals in when the template is rendered:
+If you don't want to define a subclass of `Curtain::View` and add attributes to it, you can also use variables.  `Curtain::View` supports the hash-like Ruby methods `[]` and `[]=` to define variables that will act as locals in when the template is rendered:
 
 **hello.erb**
 
@@ -229,7 +229,7 @@ generates:
 
 ### Forms
 
-The `form` tag has some special behavior as well. You can use it without an special behavior with no arguments:
+The `form` tag has some special behavior as well. You can use it without any special behavior with no arguments:
 
 ``` rhtml
 <%= form do %>
