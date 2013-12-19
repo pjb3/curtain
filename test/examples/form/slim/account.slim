@@ -1,2 +1,65 @@
-= form for: @account
-  = text name: 'name'
+h1 Account
+
+= form for: @account, role: 'form' do
+  .form-group
+    = label :email, class: 'control-label'
+    = email :email, class: 'form-control'
+
+  - # I don't recommend using the div method if it's just static HTML
+  - # but I want to test to make sure that it does work
+  = div class: 'form-group' do
+    = label :password, class: 'control-label'
+    = password :password, class: 'form-control'
+
+  .form-group
+    = label :first_name, class: 'control-label'
+    = text :first_name, class: 'form-control'
+
+  .form-group
+    = label :last_name, class: 'control-label'
+    = text :last_name, class: 'form-control'
+
+  .form-group
+    = label :website, class: 'control-label'
+    = url :website, class: 'form-control'
+
+  .form-group
+    = label :phone, class: 'control-label'
+    = tel :phone, class: 'form-control'
+
+  .form-group
+    label.control-label Gender
+    div
+      label.radio-inline
+        = radio :gender, value: 'm'
+        | Male
+      label.radio-inline
+        = radio :gender, value: 'f'
+        | Female
+
+  .form-group
+    = label :photo, class: 'control-label'
+    = file :photo, class: 'form-control'
+
+  .form-group
+    = label :favorite_color, class: 'control-label'
+    = color :favorite_color, class: 'form-control'
+
+  .form-group
+    = label :language
+    = select :language, options: [["English", "en"], ["Spanish", "es"]], class: 'form-control'
+
+  .form-group
+    = label :date_of_birth
+    = date :date_of_birth, class: 'form-control'
+
+  .form-group
+    = label :bio
+    = textarea :bio, class: 'form-control'
+
+  .form-group
+    label
+      = checkbox :notifications
+      |  Send Me Monthly Updates
+
+  = button "Save", class: 'btn btn-default'

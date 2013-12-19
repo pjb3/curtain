@@ -24,32 +24,20 @@ class FormTest < Curtain::TestCase
   %w[erb slim].each do |lang|
     test "form with #{lang}" do
       use lang
-      expected = %{<form id="test"><input type="text" name="name"></form>}
+      expected = File.read(File.expand_path("examples/form/account.html", File.dirname(__FILE__)))
 
-      assert_equal expected, strip_lines(AccountView.render)
+      assert_html_equal expected, AccountView.render("bootstrap", main: 'account')
     end
 
-    test "form with fields with #{lang}" do
+    test "form with data with #{lang}" do
       use lang
-      expected = %{<form id="test"><input type="text" name="name"></form>}
+      expected = File.read(File.expand_path("examples/form/account_with_data.html", File.dirname(__FILE__)))
 
-      assert_equal expected, strip_lines(AccountView.render)
-    end
-
-    test "form for with #{lang}" do
-      use lang
-      expected = %{<form id="test"><input type="text" name="name"></form>}
-
-      view = AccountView.new(account: Account.new(email: 'mail@paulbarry.com', date_of_birth: Date.parse('1978-07-06')))
-      assert_equal expected, strip_lines(view.render)
-    end
-
-    test "form for with fields with #{lang}" do
-      use lang
-      expected = %{<form id="test"><input type="text" name="name"></form>}
-
-      view = AccountView.new(account: Account.new(email: 'mail@paulbarry.com', date_of_birth: Date.parse('1978-07-06')))
-      assert_equal expected, strip_lines(view.render)
+      account_data = YAML.load_file(File.expand_path("examples/form/account.yml", File.dirname(__FILE__)))
+      account = Account.new(account_data)
+      view = AccountView.new(account: account)
+      assert_equal "mail@paulbarry.com", view.account.email
+      assert_html_equal expected, view.render("bootstrap", main: 'account')
     end
   end
 
