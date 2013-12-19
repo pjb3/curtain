@@ -49,6 +49,11 @@
   </div>
 
   <div class="form-group">
+    <%= label :photo, class: 'control-label' %>
+    <%= file :photo, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= label :favorite_color, class: 'control-label' %>
     <%= color :favorite_color, class: 'form-control' %>
   </div>
@@ -75,5 +80,5 @@
     </label>
   </div>
 
-
+  <%= button "Save", class: 'btn btn-default' %>
 <% end %>

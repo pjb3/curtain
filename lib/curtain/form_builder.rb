@@ -206,5 +206,9 @@ module Curtain
       content_tag(:textarea, object.try(name), attrs, &body)
     end
 
+    def button(content, attrs={}, &body)
+      content_tag(:button, content, attrs, &body)
+    end
+
   end
 end

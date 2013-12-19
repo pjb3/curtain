@@ -7,5 +7,5 @@ phone: 555-123-4567
 gender: m
 favorite_color: "#00cc00"
 date_of_birth: '1970-01-01'
-bio: This is my bio
+bio: This is my bio & it needs to be HTML escaped
 notifications: true
