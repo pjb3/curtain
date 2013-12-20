@@ -206,8 +206,12 @@ module Curtain
       content_tag(:textarea, object.try(name), attrs, &body)
     end
 
-    def button(content, attrs={}, &body)
+    def button(content=nil, attrs={}, &body)
       content_tag(:button, content, attrs, &body)
+    end
+
+    def submit(content=nil, attrs={}, &body)
+      button(content, { type: 'submit' }.merge(attrs), &body)
     end
 
   end
