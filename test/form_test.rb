@@ -26,7 +26,7 @@ class FormTest < Curtain::TestCase
       use lang
       expected = File.read(File.expand_path("examples/form/account.html", File.dirname(__FILE__)))
 
-      assert_html_equal expected, AccountView.render("bootstrap", main: 'account')
+      assert_equal expected, Glam(AccountView.render("bootstrap", main: 'account'))
     end
 
     test "form with data with #{lang}" do
@@ -37,7 +37,7 @@ class FormTest < Curtain::TestCase
       account = Account.new(account_data)
       view = AccountView.new(account: account)
       assert_equal "mail@paulbarry.com", view.account.email
-      assert_html_equal expected, view.render("bootstrap", main: 'account')
+      assert_equal expected, Glam(view.render("bootstrap", main: 'account'))
     end
   end
 
