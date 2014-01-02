@@ -1,117 +1,95 @@
 <!doctype html>
 <html>
   <head>
-    <title>
-      Account
-    </title>
+    <title>Account</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
   </head>
   <body>
     <div class="container">
-      <h1>
-        Account
-      </h1>
+      <h1>Account</h1>
       <form role="form">
         <div class="form-group">
-          <label for="email" class="control-label">
-            Email
-          </label>
+          <label for="email" class="control-label">Email</label>
+
           <input name="email" value="mail@paulbarry.com" type="email" class="form-control" id="email">
         </div>
         <div class="form-group">
-          <label for="password" class="control-label">
-            Password
-          </label>
+          <label for="password" class="control-label">Password</label>
+
           <input name="password" type="password" class="form-control" id="password">
         </div>
         <div class="form-group">
-          <label for="first_name" class="control-label">
-            First Name
-          </label>
+          <label for="first_name" class="control-label">First Name</label>
+
           <input name="first_name" value="Paul" type="text" class="form-control" id="first_name">
         </div>
         <div class="form-group">
-          <label for="last_name" class="control-label">
-            Last Name
-          </label>
+          <label for="last_name" class="control-label">Last Name</label>
+
           <input name="last_name" value="Barry" type="text" class="form-control" id="last_name">
         </div>
         <div class="form-group">
-          <label for="website" class="control-label">
-            Website
-          </label>
+          <label for="website" class="control-label">Website</label>
+
           <input name="website" value="http://paulbarry.com" type="url" class="form-control" id="website">
         </div>
         <div class="form-group">
-          <label for="phone" class="control-label">
-            Phone
-          </label>
+          <label for="phone" class="control-label">Phone</label>
+
           <input name="phone" value="555-123-4567" type="tel" class="form-control" id="phone">
         </div>
         <div class="form-group">
-          <label class="control-label">
-            Gender
-          </label>
+          <label class="control-label">Gender</label>
           <div>
             <label class="radio-inline">
+
               <input name="radio" type="radio" checked="checked" value="m" id="radio">
               Male
             </label>
             <label class="radio-inline">
+
               <input name="radio" type="radio" value="f" id="radio">
               Female
             </label>
           </div>
         </div>
         <div class="form-group">
-          <label for="photo" class="control-label">
-            Photo
-          </label>
+          <label for="photo" class="control-label">Photo</label>
+
           <input name="photo" type="file" class="form-control" id="photo">
         </div>
         <div class="form-group">
-          <label for="favorite_color" class="control-label">
-            Favorite Color
-          </label>
+          <label for="favorite_color" class="control-label">Favorite Color</label>
+
           <input name="favorite_color" value="#00cc00" type="color" class="form-control" id="favorite_color">
         </div>
         <div class="form-group">
-          <label for="language">
-            Language
-          </label>
+          <label for="language">Language</label>
           <select name="language" class="form-control" id="language">
-            <option value="en">
-              English
-            </option>
-            <option value="es">
-              Spanish
-            </option>
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="date_of_birth">
-            Date Of Birth
-          </label>
+          <label for="date_of_birth">Date Of Birth</label>
+
           <input name="date_of_birth" value="1970-01-01" type="date" class="form-control" id="date_of_birth">
         </div>
         <div class="form-group">
-          <label for="bio">
-            Bio
-          </label>
-          <textarea class="form-control">
-            This is my bio & it needs to be HTML escaped
-          </textarea>
+          <label for="bio">Bio</label>
+          <textarea class="form-control">This is my bio & it needs to be HTML escaped</textarea>
         </div>
         <div class="form-group">
           <label>
+
             <input name="checkbox" type="checkbox" value="true" checked="checked" id="checkbox">
             Send Me Monthly Updates
           </label>
         </div>
-        <button type="submit" class="btn btn-default">
-          Save
-        </button>
+        <button type="submit" class="btn btn-default">Save</button>
       </form>
     </div>
     <script src="http://code.jquery.com/jquery.js">
