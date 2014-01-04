@@ -45,9 +45,13 @@ module Curtain
         raise TemplateNotFound.new("Could not find a template matching '#{name}' in #{Array(template_directories).map{|d| File.expand_path(d) }}")
       end
 
+      def template_name
+        name.underscore.sub(/_view$/,'')
+      end
+
       def template(*args)
         if args.empty?
-          @template ||= name.underscore.sub(/_view$/,'')
+          @template ||= template_name
         else
           @template = args.first
         end
