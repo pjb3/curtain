@@ -19,5 +19,3 @@ module Curtain
     end
   end
 end
-
-Tilt.prefer Curtain::ErubisTemplate, 'erb'

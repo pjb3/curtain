@@ -42,7 +42,14 @@ module Curtain
 
       orig_buffer = @output_buffer
       @output_buffer = Curtain::OutputBuffer.new
-      template = Tilt.new(template_file, :buffer => '@output_buffer', :use_html_safe => true, :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer )
+      case ext
+      when 'slim'
+        template = ::Slim::Template.new(template_file, :buffer => '@output_buffer', :use_html_safe => true, :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer )
+      when 'erb'
+        template = ::Curtain::ErubisTemplate.new(template_file, :buffer => '@output_buffer', :use_html_safe => true, :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer )
+      else
+        raise "Curtain cannot process .#{ext} templates"
+      end
       template.render(self, variables.merge(locals))
       @output_buffer
     ensure
