@@ -28,11 +28,7 @@ module Curtain
     # @return [String] The result of rendering the template
     # @see #default_template_name
     def render(*args)
-      name = if args.length == 0 || args.first.is_a?(Hash)
-        self.class.template
-      else
-        args.first.to_s
-      end
+      name = get_template_name(*args)
 
       locals = args.last.is_a?(Hash) ? args.last : {}
 
@@ -54,6 +50,14 @@ module Curtain
       @output_buffer
     ensure
       @output_buffer = orig_buffer
+    end
+
+    def get_template_name(*args)
+      if args.length == 0 || args.first.is_a?(Hash)
+        self.class.template
+      else
+        args.first.to_s
+      end
     end
   end
 end
